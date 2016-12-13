@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -7,14 +6,67 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>First Start with React :  TO DO Case</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+        <Form />
         </p>
       </div>
     );
+  }
+}
+
+class Form extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {items: [], value: ''};
+    this.clickListener = this.clickListener.bind(this);
+    this.handleInput = this.handleChangeInput.bind(this);
+  }
+
+  clickListener(e) {
+    var itemArrays = this.state.items;
+    itemArrays.push(this.state.value);
+    this.setState({ items : itemArrays });
+    // alert('Nama : ' + this.state.value);
+    event.preventDefault();
+  }
+
+  handleChangeInput(e) {
+    this.setState({value: e.target.value});
+  }
+
+  render() {
+    return(
+      <div>
+        <input type="text" value={this.state.value} onChange={this.handleInput} placeholder="Tambahkan to do"/>
+        
+        <button onClick={this.clickListener}>Testing button</button>
+        <br/><br/>
+        <ListItem entries={this.state.items}></ListItem>
+      </div>
+      );
+  }
+}
+
+class ListItem extends Component {
+  render() {
+    var items = this.props.entries;
+
+    function createTasks(item) {
+      return <li>{item}</li>
+    }
+
+    var listUi = items.map(createTasks);
+
+    return(
+      <div>
+      <ul>
+      {listUi}
+      </ul>
+      </div>
+      );
   }
 }
 
